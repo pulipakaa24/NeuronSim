@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matplotlib Plot</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div class="root">
+            <nav class="navbar navbar-expand-lg border-body" style="background-color: #fc9003;">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">VCDE Portfolio: Reading the Brain</span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    Simulation
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/bg">
+                                    Background
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="plot-container" class="container text-center">
+                <!-- plot goes here -->
+                <!-- <img src="data:image/png;base64,{{ plot_url }}" alt="Matplotlib Plot"> -->
+            </div>
+            <hr/>
+            <div class="container text-center">
+                <div class="row">
+                    <p class="h4">Millisecond Steps Simulated:</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p id="s"></p>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <p class="h4">Intrinsic Conditions:</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Calcium Channel Conductance:
+                        <p id="gca"></p>
+                    </div>
+                    <div class="col">
+                        Calcium Channel Steady State Voltage:
+                        <p id="eca"></p>
+                    </div>
+                    <div class="col">
+                        Potassium Channel Conductance:
+                        <p id="gk"></p> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Potassium Channel Steady State Voltage:
+                        <p id="ek"></p>
+                    </div>
+                    <div class="col">
+                        Leak Conductance:
+                        <p id="gl"></p>
+                    </div>
+                    <div class="col">
+                        Leak Steady State Voltage:
+                        <p id="el"></p> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Membrane Capacitance:
+                        <p id="cm"></p>
+                    </div>
+                    <div class="col">
+                        Threshold Voltage Param 1:
+                        <p id="v1"></p>
+                    </div>
+                    <div class="col">
+                        Threshold Voltage Param 2:
+                        <p id="v2"></p> 
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <p class="h4">Externals</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Trial 1 External Current:
+                        <p id="i1"></p>
+                    </div>
+                    <div class="col">
+                        Trial 2 External Current:
+                        <p id="i2"></p>
+                    </div>
+                    <div class="col">
+                        Initial Voltage across membrane:
+                        <p id="v0"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paramModal">Modify Parameters</button>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <p class="h3">
+                        Explanation
+                    </p>
+                    <p>
+                        Probably the first thing you should look at is the blue graph. This is the graph of membrane potential difference (potential 
+                        difference between inside and outside of cell).The most easily understandable factor for this graph is the input external
+                        current. This is representative of a flow of ions into the cell. When this value is below a certain threshold, the graph
+                        resembles an overdamped diff-eq. When the value is a little greater but not too large, the graph represents a critically damped diff-eq.
+                        Finally, after a certain threshold, the graph represents an undamped diff-eq. The oscillation frequency simply increases after this point.
+                        <br><br>Next, we can take a look at the green graph. This represents the gate state of the neuron. Evidently, the gate state spikes 
+                        just as the membrane potential drops. This shows that the gate allows voltage to return to steady state by allowing an action potential to
+                        pass through the neuron. This graph also reaches an asymptote if there are no repeated spikes in membrane potential.<br><br>Finally,
+                        the graph on the right shows the relationship between membrane potential and gate value. We can again see that once membrane potential reaches
+                        a certain value, the gate value rapidly increases and allows voltage to return to steady state.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="paramModal" tabindex="-1" aria-labelledby="paramModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modify Parameters</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    Millisecond Steps Simulated
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="ss" min="0" max="10000">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="sin" min="0" max="10000">
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col">
+                                    External Current 1
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="i1s" min="0" max="100">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="i1in" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    External Current 2
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="i2s" min="0" max="100">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="i2in" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Initial Voltage
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="v0s" min="-100" max="100">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="v0in" min="-100" max="100">
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col">
+                                    Calcium Channel Conductance
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="gcas" min="0" max="20">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="gcain" min="0" max="20">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Calcium Channel SS Voltage
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="ecas" min="0" max="200">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="ecain" min="0" max="200">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Potassium Channel Conductance
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="gks" min="0" max="20">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="gkin" min="0" max="20">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Potassium Channel SS Voltage
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="eks" min="-150" max="0">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="ekin" min="-150" max="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Leak Conductance
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="gls" min="0" max="20">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="glin" min="0" max="20">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Leak SS Voltage
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="els" min="-120" max="0">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="elin" min="-120" max="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Membrane Capacitance
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="cms" min="0" max="50">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="cmin" min="0" max="50">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Threshold Voltage Param 1
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="v1s" min="-5" max="5">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="v1in" min="-5" max="5">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Threshold Voltage Param 2
+                                </div>
+                                <div class="col">
+                                    <input type="range" id="v2s" min="0" max="50">
+                                </div>
+                                <div class="col">
+                                    <input type="number" id="v2in" min="0" max="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="postParams()">Save and Exit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            let updateList = ['#gca', '#eca', '#gk', '#gl', '#ek', '#el', '#cm', '#v1', '#v2', '#i1', '#i2', '#v0', '#s', '#plot-container'];
+            let formList = ['gcas', 'gcain', 'ecas', 'ecain', 'gks', 'gkin', 'gls', 'glin', 'eks', 'ekin', 'els', 'elin', 'cms',
+                'cmin', 'v1s', 'v1in', 'v2s', 'v2in', 'i1s', 'i1in', 'i2s', 'i2in', 'v0s', 'v0in', 'ss', 'sin'];
+            
+            for (let i = 0; i < formList.length; i+=2) {
+                const slider = document.getElementById(formList[i]);
+                const numberBox = document.getElementById(formList[i+1]);
+
+                // Update numberBox value when slider changes
+                slider.addEventListener("input", function() {
+                    numberBox.value = this.value;
+                });
+
+                // Update slider value when numberBox changes
+                numberBox.addEventListener("input", function() {
+                    slider.value = this.value;
+                });
+            }
+
+            $(document).ready(function() {
+                
+                console.log("success")
+
+                $.ajax({
+                    url: '/gen',
+                    method: 'GET',
+                    success: function(response) {
+                        console.log("success")
+                        console.log(response)
+                        for (let index in response) {
+                            $(updateList[index]).html(response[index]);
+                            if (2 * index < formList.length) {
+                                document.getElementById(formList[2*index]).value = response[index];
+                                document.getElementById(formList[2*index + 1]).value = response[index];
+                            }
+                        }
+                    }
+                });
+            })
+
+            const postParams = async () => {
+                $.ajax({
+                    url: '/upd',
+                    method: 'POST',
+                    data: {
+                        g_Ca: $("#gcain").val(),
+                        E_Ca: $("#ecain").val(),
+                        g_K: $("#gkin").val(),
+                        g_L: $("#glin").val(),
+                        E_K: $("#ekin").val(),
+                        E_L: $('#elin').val(),
+                        C_M: $("#cmin").val(),
+                        V1: $("#v1in").val(),
+                        V2: $("#v2in").val(),
+                        Iext1: $("#i1in").val(),
+                        Iext2: $("#i2in").val(),
+                        V0: $("#v0in").val(),
+                        steps: $("#sin").val()
+                    },
+                    success: function(response) {
+                        console.log("succupd");
+                        console.log(response.length);
+                        for (let index in response) {
+                            $(updateList[index]).html(response[index]);
+                            if (2 * index < formList.length) {
+                                document.getElementById(formList[2*index]).value = response[index];
+                                document.getElementById(formList[2*index + 1]).value = response[index];
+                            }
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

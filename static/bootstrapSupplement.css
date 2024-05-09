@@ -1,0 +1,7 @@
+:root {
+    --BurntOrange: #fc9003;
+}
+
+nav {
+    background-color: var(--BurntOrange);
+}

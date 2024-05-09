@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matplotlib Plot</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div class="root">
+            <nav class="navbar navbar-expand-lg border-body" style="background-color: #fc9003;">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">VCDE Portfolio: Reading the Brain</span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/">
+                                    Simulation
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    Background
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container text-center" style="padding-top: 20px">
+                <p class="h1">
+                    Why Did I Choose This Project?
+                </p>
+                <p>
+                    With my mom being a neurologist and my dad an engineer, I've always ended up having a sort of identity crisis between
+                    biology and math/physics. Up until a few years ago even, I was teetering between becoming a doctor and becoming a
+                    mechanical or electrical/electronics engineer.<br><br>This continued until I realized that I could combine my interests
+                    in so many fields, such as BioECE. While there are many fields within BioECE that pique my interest, BCIs (Brain-Computer
+                    Interfaces) came to mind almost instantly as a potential application of diff-eq in signal processing. As I continued
+                    researching, however, I found that the core behavior of neurons was much more interesting than 'spike sorting,' as the
+                    classification of neuron signals is known. The modeling of membrane potential used diff-eq and was much more interesting
+                    in my opinion.
+                </p>
+                <p class="h1">
+                    An Outside Perspective
+                </p>
+                <p>
+                    Although my two options for BCI researcher interviews didn't quite get back to me, I had a good talk with my mother about how she reads
+                    EEGs in her work as a neurologist. It was interesting to see how much math trickles down to every STEM subject, albeit in
+                    watered-down forms. Essentially, there are a few different categories of brain activity waves, including alpha, beta, gamma, 
+                    delta, and theta waves, all occupying different frequency ranges. My mother doesn't sit there and do calculations of period, 
+                    but rather just recognizes their relative frequencies because she's simply seen so many of them. In this manner, she is able 
+                    to care for patients without an exact knowledge of the math behind the waves.<br><br>This brings up an important point, that
+                    neuroscience is by no means an exact science. Just like many other biological systems, much of the behavior of a neuron is 
+                    relatively random, and we can only approximate their true activity, or make educated guesses about how neurons would work in an 
+                    ideal situation.
+                </p>
+                <p class="h1">
+                    The Models
+                </p>
+                <p>
+                    The Morris Lecar Model, which the simulation is built off of, was preceded by the Hodgkin-Huxley model, which first proposed 
+                    the simplification of a neuron to a circuit. The conductances and steady-state voltages of ion channels, ion leaks across the 
+                    cell membrane, membrane capacitance, and current in the form of ions going into the cell are used to predict membrane potential.
+                </p>
+                <hr/>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Hodgkin-Huxley.svg/525px-Hodgkin-Huxley.svg.png" alt="Example Image">
+                <p>
+                    where C<sub>m</sub> is the membrane capacitance, g<sub>n</sub> refers to a conductance value for each ion channel, E<sub>n</sub> 
+                    refers to the steady-state voltage for each ion channel, and g<sub>L</sub> and E<sub>L</sub> refer to the corresponding values for 
+                    the leak across the membrane. I<sub>p</sub> is the external current across the membrane. 
+                </p>
+                <hr/>
+                <p class="h5">
+                    The Morris-Lecar model, used by the simulation, uses the following few equations.
+                </p>
+                <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d26035b4c5fb07ea6ee73a471493a31c1d90e516" alt="Example Image">
+                <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa3834e923316f95fbd0e0502324dd4633b4dd3a" alt="Example Image">
+                <p>
+                    As I mentioned in my presentation, your guess is as good as mine as to how to actually apply these equations in practice, but that's 
+                    where some googling and collaboration comes in! Thankfully, there was python code available from Dr. Guillaume Lajoie on Github, which 
+                    I was able to understand much better than the diff-eq in raw form. In fact, I just now realized that python is really powerful because 
+                    basically what this code does is load up all the constants, set up the equations, and pass them to an ordinary differential equation 
+                    solver included with the python library SciPy. 
+                </p>
+                <p class="h1">
+                    The Problem
+                </p>
+                <p>
+                    Although I presented a possible problem as being the need to simulate behavior of a neuron under certain predetermined conditions, I 
+                    realized that what I'm doing right this second is solving a problem in this industry. I feel that the fact that I had to be well-versed in  
+                    python to truly grasp the nature of a neuroscience phenomenon is a problem, and I think these tools should be more widely accessible. 
+                    That's why, by making a simulation that runs on this python code and simplifies things a bit, I feel that I've solved a problem of 
+                    inaccessibility. Take whichever problem you will, but I think making these tools more accessible is more valuable than what I initially 
+                    presented.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
