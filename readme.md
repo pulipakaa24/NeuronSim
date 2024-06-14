@@ -2,6 +2,7 @@
 
 ## Background
 
+This was a final project for my Vector Calculus/Differential Equations Class in HS. The simulation replicates the membrane potential in mV and the gate value (essentiall whether the gate is open or closed) of a neuron under a constant external current into the neuron. There are various 
 
 ## Setup
 
